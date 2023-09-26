@@ -1,16 +1,13 @@
 package ch.supsi.webapp;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Ticket {
     private String title;
     private String description;
     private String author;
 
-    @JsonCreator
-    Ticket(@JsonProperty("title") String title, @JsonProperty("description") String description,
-           @JsonProperty("author") String author) {
+    Ticket(){}
+
+    Ticket(String title, String description, String author) {
         this.title = title;
         this.description = description;
         this.author = author;
