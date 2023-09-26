@@ -14,13 +14,13 @@
           <element id="module-output" name="boldini" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.20" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.4" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.4" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.4" />
-          <element id="library" level="project" name="Maven: net.minidev:json-smart:2.4.8" />
-          <element id="library" level="project" name="Maven: net.minidev:accessors-smart:2.4.8" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm:9.1" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.26" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.15.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.15.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.15.1" />
+          <element id="library" level="project" name="Maven: net.minidev:json-smart:2.4.10" />
+          <element id="library" level="project" name="Maven: net.minidev:accessors-smart:2.4.9" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm:9.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">
