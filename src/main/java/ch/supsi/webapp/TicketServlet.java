@@ -48,5 +48,4 @@ public class TicketServlet extends HttpServlet {
         out.print(ticketList.toJSONString());
         out.flush();
     }
-
 }

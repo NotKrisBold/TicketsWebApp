@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="boldini" target="17" />
+      <module name="boldini" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
