@@ -12,6 +12,7 @@ import net.minidev.json.JSONObject;
 @WebServlet(value = "/tickets")
 public class TicketServlet extends HttpServlet {
     private final ArrayList<Ticket> tickets = new ArrayList<>();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -32,8 +33,7 @@ public class TicketServlet extends HttpServlet {
             }
 
             // Parsa la stringa JSON in un oggetto Java utilizzando Jackson
-            ObjectMapper objectMapper = new ObjectMapper();
-            toAdd = objectMapper.readValue(jsonInput.toString(), Ticket.class);
+            toAdd = mapper.readValue(jsonInput.toString(), Ticket.class);
         }
         else if(contentType.contains("application/x-www-form-urlencoded")){
             String title = req.getParameter("title");
@@ -53,20 +53,7 @@ public class TicketServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-
-        JSONArray ticketList = new JSONArray();
-
-        for (Ticket ticket : tickets) {
-            JSONObject ticketJSON = new JSONObject();
-            ticketJSON.put("title", ticket.getTitle());
-            ticketJSON.put("description", ticket.getDescription());
-            ticketJSON.put("author", ticket.getAuthor());
-            ticketList.add(ticketJSON);
-        }
-
-        PrintWriter out = resp.getWriter();
-        out.print(ticketList.toJSONString());
-        out.flush();
+        String jsonString = mapper.writeValueAsString(tickets);
+        resp.getWriter().println(jsonString);
     }
 }
