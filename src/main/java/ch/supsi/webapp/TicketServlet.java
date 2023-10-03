@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import com.fasterxml.jackson.core.JsonParser;
 
 @WebServlet(value = "/tickets")
 public class TicketServlet extends HttpServlet {
