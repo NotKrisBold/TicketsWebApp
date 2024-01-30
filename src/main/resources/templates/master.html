@@ -9,9 +9,9 @@
     <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/dashboard.css}" rel="stylesheet">
     <link th:href="@{/css/bootstrap-icons.css}" rel="stylesheet">
-
     <th:block th:replace="${metas}" />
     <title th:replace="${title}">SUPSI - Tickets</title>
+    <base th:href="@{/}" />
 
 </head>
 <body>
@@ -21,7 +21,7 @@
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+    <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" id="search-input" aria-label="Search">
     <div class="navbar-nav" sec:authorize="isAuthenticated()">
         <div class="nav-item text-nowrap">
             <a class="nav-link px-3" th:href="@{/logout}">Sign out</a>
@@ -53,13 +53,14 @@
             </div>
             <footer class="footer">SUPSI 2022</footer>
         </nav>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="content_container">
             <th:block th:insert="${content}"></th:block>
         </main>
     </div>
 </div>
 
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.js}"></script>
+<script th:src="@{/js/ajaxSearch.js}"></script>
 
 </body>
 </html>

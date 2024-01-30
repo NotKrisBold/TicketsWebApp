@@ -47,15 +47,15 @@
                             <input type="password" id="password_confirm" name="password_confirm" placeholder="Conferma password"  class="form-control">
                         </div>
                     </div>
-                    <div style="text-align:right">
+                    <div style="text-align:right" id="register_submit_container">
                         <a th:href="@{/}" class="btn" id="cancel_button">Cancel</a>
                         <input class="btn btn-primary" type="submit" value="Registrati" id="register_submit">
                     </div>
-
                 </form>
                 <hr>
                 <p>Already registered? <a th:href="@{/login}">Sing in</a></p>
             </form>
+            <script type="text/javascript" th:src="@{/js/formValidator.js}"></script>
         </main>
     </body>
 </html>
