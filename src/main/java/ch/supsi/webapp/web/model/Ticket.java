@@ -37,6 +37,10 @@ public class Ticket {
 	private List<Comment> comments;
 
 	public void addComment(Comment comment){
-		comments.add(comment);
+		comments.add(0, comment);
+	}
+
+	public void deleteComment(Comment comment){
+		comments.remove(comment);
 	}
 }

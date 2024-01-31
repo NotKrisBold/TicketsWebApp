@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,13 @@ public class MainController {
         return "redirect:/ticket/"+ticket.getId();
     }
 
+    @DeleteMapping("ticket/{id}")
+    public String deleteComment(Ticket ticket, @RequestParam("comment") Comment comment){
+        ticket.deleteComment(comment);
+        ticketService.put(ticket);
+        return "detail";
+    }
+
     private static void setAttachment(Ticket ticket, MultipartFile attachment) throws IOException {
         if(!attachment.isEmpty()) {
             ticket.setAttachment(Attachment.builder()
@@ -113,11 +122,16 @@ public class MainController {
     }
 
     @PostMapping("/ticket/{id}/comment")
-    public String putComment(@PathVariable int id, Ticket updatedTicket) throws IOException {
+    public String putComment(@PathVariable int id, @RequestParam("commentText") String commentText) throws IOException {
         Ticket ticket = ticketService.get(id);
-        ticket.setComments(updatedTicket.getComments());
+        Comment comment = new Comment();
+        comment.setTime(LocalDate.now());
+        comment.setContent(commentText);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setAuthor(ticketService.findUserByUsername(user.getUsername()));
+        ticket.addComment(comment);
         ticketService.put(ticket);
-        return "redirect:/ticket/{id}/edit";
+        return "redirect:/ticket/{id}";
     }
 
     @GetMapping(value = "/ticket/{id}/delete")

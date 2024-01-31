@@ -43,6 +43,26 @@
                         <p th:if="${ticket.attachment != null}">
                             <a th:href="@{'/ticket/'+${ticket.id}+'/attachment'}" target="_blank" th:text="${ticket.attachment.name}"></a> (<span th:text="${ticket.attachment.contentType}"></span>) <span th:text="${ticket.attachment.readeableSize}"></span>
                         </p>
+                        <hr>
+                        <div>
+                            <a class="btn btn-sm btn-outline-info" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/comment'}"><span class="bi bi-text-center"></span> New Comment</a>
+                        </div>
+                        <hr>
+                        <div class="comments-table">
+                            <table class="table table-striped table-sm">
+                                <tbody>
+                                <tr th:each="comment : ${ticket.getComments()}">
+                                    <div>
+                                        <p th:text="'Author: ' + ${comment.author.username}">Author</p>
+                                        <p th:text="'Commented: ' + ${comment.content}"></p>
+                                        <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/comment'}"><span class="bi bi-text-center"></span> Respond</a>
+                                        <a class="btn btn-sm btn-outline-danger"><span class="bi bi-text-center"></span> Delete</a>
+                                        <hr>
+                                    </div>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </article>
                 </section>
             </div>

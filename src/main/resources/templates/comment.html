@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{master :: layout(_,~{::meta},~{::main/content()})}">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{master :: layout(_,~{::meta},~{::main/content()})}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,8 +23,8 @@
                 </div>
             </div>
             <hr>
-            <input class="btn btn-primary offset-sm-2" type="submit" th:value="'Submit'">
-            <a th:href="@{/}" class="btn btn-secondary">Cancel</a>
+            <input class="btn btn-primary offset-sm-2" type="submit" name="commentText" th:value="prova">
+            <a sec:authorize-url="/ticket/*" th:href="@{'/ticket/'+${ticket.id}}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </main>
