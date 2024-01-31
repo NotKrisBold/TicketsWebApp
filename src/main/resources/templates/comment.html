@@ -23,7 +23,7 @@
                 </div>
             </div>
             <hr>
-            <input class="btn btn-primary offset-sm-2" type="submit" name="commentText" th:value="prova">
+            <input class="btn btn-primary offset-sm-2" type="submit" name="commentText">
             <a sec:authorize-url="/ticket/*" th:href="@{'/ticket/'+${ticket.id}}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
