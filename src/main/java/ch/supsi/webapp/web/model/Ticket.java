@@ -5,6 +5,7 @@ import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(of = {"id"}) @ToString
 @Entity
@@ -32,4 +33,10 @@ public class Ticket {
 	@JsonIgnore
 	Attachment attachment;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Comment> comments;
+
+	public void addComment(Comment comment){
+		comments.add(comment);
+	}
 }

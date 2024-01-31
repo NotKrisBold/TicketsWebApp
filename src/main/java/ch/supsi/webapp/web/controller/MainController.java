@@ -2,6 +2,7 @@ package ch.supsi.webapp.web.controller;
 
 import ch.supsi.webapp.web.dto.TicketDTO;
 import ch.supsi.webapp.web.model.Attachment;
+import ch.supsi.webapp.web.model.Comment;
 import ch.supsi.webapp.web.model.Ticket;
 import ch.supsi.webapp.web.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -101,6 +102,22 @@ public class MainController {
         setAttachment(ticket, file);
         ticketService.put(ticket);
         return "redirect:/ticket/{id}";
+    }
+
+    @GetMapping("/ticket/{id}/comment")
+    public String comment(@PathVariable int id, Model model){
+        checkTicketExists(id);
+        Ticket ticket = ticketService.get(id);
+        model.addAttribute("ticket", ticket);
+        return "comment";
+    }
+
+    @PostMapping("/ticket/{id}/comment")
+    public String putComment(@PathVariable int id, Comment comment) throws IOException {
+        Ticket ticket = ticketService.get(id);
+        ticket.addComment(comment);
+        ticketService.put(ticket);
+        return "redirect:/ticket/{id}/edit";
     }
 
     @GetMapping(value = "/ticket/{id}/delete")

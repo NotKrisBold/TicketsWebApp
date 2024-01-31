@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class TicketService {
 
     @PostConstruct
     public void init() {
-        if(roleRepository.findAll().size() == 0) {
+        if(roleRepository.findAll().isEmpty()) {
             Role roleAdmin = new Role("ROLE_ADMIN");
             Role roleUser = new Role("ROLE_USER");
             roleRepository.save(roleAdmin);
@@ -49,6 +50,7 @@ public class TicketService {
             ticket.setDescription("Da ieri sera non riesco più a loggarmi");
             ticket.setType(TicketType.BUG);
             ticket.setDate(new Date());
+            ticket.setComments(new ArrayList<>());
             post(ticket);
             ticket = new Ticket();
             ticket.setAuthor(userRepository.getReferenceById("admin"));
@@ -57,6 +59,7 @@ public class TicketService {
             ticket.setDescription("Quando apro l'applicativo ho una schermata bianca");
             ticket.setType(TicketType.BUG);
             ticket.setDate(new Date());
+            ticket.setComments(new ArrayList<>());
             post(ticket);
         }
     }
