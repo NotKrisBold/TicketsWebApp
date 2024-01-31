@@ -113,9 +113,9 @@ public class MainController {
     }
 
     @PostMapping("/ticket/{id}/comment")
-    public String putComment(@PathVariable int id, Comment comment) throws IOException {
+    public String putComment(@PathVariable int id, Ticket updatedTicket) throws IOException {
         Ticket ticket = ticketService.get(id);
-        ticket.addComment(comment);
+        ticket.setComments(updatedTicket.getComments());
         ticketService.put(ticket);
         return "redirect:/ticket/{id}/edit";
     }
