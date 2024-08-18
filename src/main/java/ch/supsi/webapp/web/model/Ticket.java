@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class Ticket {
 	@JsonIgnore
 	Attachment attachment;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Comment> comments;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comment> comments = new ArrayList<>();
 
 	public void addComment(Comment comment){
 		comments.add(0, comment);

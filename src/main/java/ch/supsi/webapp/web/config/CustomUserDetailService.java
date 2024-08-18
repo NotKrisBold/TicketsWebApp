@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-	private TicketService ticketService;
+	private final TicketService ticketService;
 
 	public CustomUserDetailService(TicketService ticketService){
 		this.ticketService = ticketService;

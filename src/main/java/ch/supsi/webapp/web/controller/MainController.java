@@ -4,6 +4,7 @@ import ch.supsi.webapp.web.dto.TicketDTO;
 import ch.supsi.webapp.web.model.Attachment;
 import ch.supsi.webapp.web.model.Comment;
 import ch.supsi.webapp.web.model.Ticket;
+import ch.supsi.webapp.web.service.CommentService;
 import ch.supsi.webapp.web.service.TicketService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -26,10 +27,13 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
 
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
-    public MainController(TicketService service) {
+    private final CommentService commentService;
+
+    public MainController(TicketService service, CommentService commentService) {
         this.ticketService = service;
+        this.commentService = commentService;
     }
 
     @ModelAttribute("servletPath")
@@ -72,13 +76,6 @@ public class MainController {
         return "redirect:/ticket/"+ticket.getId();
     }
 
-    @DeleteMapping("ticket/{id}")
-    public String deleteComment(Ticket ticket, @RequestParam("comment") Comment comment){
-        ticket.deleteComment(comment);
-        ticketService.put(ticket);
-        return "detail";
-    }
-
     private static void setAttachment(Ticket ticket, MultipartFile attachment) throws IOException {
         if(!attachment.isEmpty()) {
             ticket.setAttachment(Attachment.builder()
@@ -118,6 +115,7 @@ public class MainController {
         checkTicketExists(id);
         Ticket ticket = ticketService.get(id);
         model.addAttribute("ticket", ticket);
+        model.addAttribute("isReply", false);
         return "comment";
     }
 
@@ -132,6 +130,31 @@ public class MainController {
         ticket.addComment(comment);
         ticketService.put(ticket);
         return "redirect:/ticket/{id}";
+    }
+
+    @GetMapping("/ticket/{id}/reply")
+    public String replyForm(@PathVariable int id, @RequestParam("parentId") int parentCommentId, Model model) {
+        checkTicketExists(id);
+        Ticket ticket = ticketService.get(id);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("isReply", true);
+        return "comment";
+    }
+
+    @PostMapping("/ticket/{id}/reply")
+    public String putReply(@PathVariable int id, @RequestParam("commentText") String commentText, @RequestParam("parentId") int parentId) throws IOException {
+        Comment comment = new Comment();
+        comment.setTime(LocalDate.now());
+        comment.setContent(commentText);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setAuthor(ticketService.findUserByUsername(user.getUsername()));
+        commentService.saveReply(id, parentId, comment);
+        return "redirect:/ticket/{id}";
+    }
+
+    @GetMapping("ticket/{id}/comment/delete")
+    public String deleteComment(Ticket ticket, @RequestParam("comment") Comment comment){
+        return "detail";
     }
 
     @GetMapping(value = "/ticket/{id}/delete")
@@ -169,7 +192,6 @@ public class MainController {
     @ResponseBody
     public List<TicketDTO> search(@RequestParam("q") String search, Model model){
         return ticketService.list(search).stream().map(TicketDTO::ticket2DTO).collect(Collectors.toList());
-
     }
 
 
