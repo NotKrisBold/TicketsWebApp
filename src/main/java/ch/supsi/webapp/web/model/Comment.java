@@ -21,6 +21,7 @@ public class Comment {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id") // Specifica la colonna della chiave esterna
     private User author;
 
     private LocalDate time;
@@ -28,17 +29,16 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id") // The column that will be used for the relationship
+    @JoinColumn(name = "ticket_id") // Specifica la colonna della chiave esterna
     private Ticket ticket;
 
     @ManyToOne
-    @JoinColumn(name = "parent_comment_id")
+    @JoinColumn(name = "parent_comment_id") // Specifica la colonna della chiave esterna
     private Comment parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> responses = new ArrayList<>();
 
-    // Helper method to add a reply
     public void addReply(Comment reply) {
         reply.setParentComment(this);
         this.responses.add(reply);

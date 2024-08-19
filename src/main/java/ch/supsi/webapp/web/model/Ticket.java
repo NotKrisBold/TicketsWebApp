@@ -40,8 +40,4 @@ public class Ticket {
 	public void addComment(Comment comment){
 		comments.add(0, comment);
 	}
-
-	public void deleteComment(Comment comment){
-		comments.remove(comment);
-	}
 }

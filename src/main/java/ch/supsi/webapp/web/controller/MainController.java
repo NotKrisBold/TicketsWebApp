@@ -129,11 +129,12 @@ public class MainController {
         comment.setAuthor(ticketService.findUserByUsername(user.getUsername()));
         ticket.addComment(comment);
         ticketService.put(ticket);
+        commentService.put(id, null, comment);
         return "redirect:/ticket/{id}";
     }
 
     @GetMapping("/ticket/{id}/reply")
-    public String replyForm(@PathVariable int id, @RequestParam("parentId") int parentCommentId, Model model) {
+    public String replyForm(@PathVariable int id, Model model) {
         checkTicketExists(id);
         Ticket ticket = ticketService.get(id);
         model.addAttribute("ticket", ticket);
@@ -148,13 +149,14 @@ public class MainController {
         comment.setContent(commentText);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         comment.setAuthor(ticketService.findUserByUsername(user.getUsername()));
-        commentService.saveReply(id, parentId, comment);
+        commentService.put(id, parentId, comment);
         return "redirect:/ticket/{id}";
     }
 
-    @GetMapping("ticket/{id}/comment/delete")
-    public String deleteComment(Ticket ticket, @RequestParam("comment") Comment comment){
-        return "detail";
+    @GetMapping("/ticket/{ticketId}/comment/delete")
+    public String deleteComment(@PathVariable int ticketId, @RequestParam("commentId") int commentId) {
+        commentService.deleteComment(commentId);
+        return "redirect:/ticket/" + ticketId;
     }
 
     @GetMapping(value = "/ticket/{id}/delete")

@@ -50,15 +50,15 @@
                         <span class="bi bi-text-center"></span>New Comment
                     </a>
                 </div>
-                <div th:if="${ticket.getComments().size() == 0}" class="mt-3">
+                <div th:if="${ticket.comments.size() == 0}" class="mt-3">
                     <h6 class="mb-0">No comments yet</h6>
                 </div>
                 <hr>
-                <div th:if="${ticket.getComments().size() > 0}" class="comment-section">
+                <div th:if="${ticket.comments.size() > 0}" class="comment-section">
                     <!-- Itera sui commenti principali -->
-                    <div th:each="comment : ${ticket.getComments()}" class="comment-container" style="margin-bottom: 20px;">
+                    <div th:each="comment : ${ticket.comments}" class="comment-container" style="margin-bottom: 20px;">
                         <!-- Main Comment -->
-                        <p th:text="${comment.author.username} + ' | ' + ${comment.getTime()}">Author</p>
+                        <p th:text="${comment.author.username} + ' | ' + ${comment.time}">Author</p>
                         <p th:text="${comment.content}">Comment content</p>
 
                         <!-- Buttons aligned side by side -->
@@ -66,14 +66,14 @@
                             <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${comment.id}}">
                                 <span class="bi bi-text-center"></span> Respond
                             </a>
-                            <a class="btn btn-sm btn-outline-danger" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/delete?commentId=' + ${comment.id}}">
+                            <a class="btn btn-sm btn-outline-danger" th:if="${comment.author.username} == ${#authentication.name}"
+                               sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/comment/delete?commentId=' + ${comment.id}}">
                                 <span class="bi bi-trash"></span> Delete
                             </a>
                         </div>
 
                         <!-- Include fragment to handle replies -->
-                        <div th:insert="~{::replyFragment(comment)}"></div>
-
+                        <div th:insert="~{::replyFragment(comment=${comment})}"></div>
                         <hr>
                     </div>
                 </div>
@@ -95,13 +95,16 @@
                 <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${reply.id}}">
                     <span class="bi bi-text-center"></span> Respond
                 </a>
-                <a class="btn btn-sm btn-outline-danger" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/delete?commentId=' + ${reply.id}}">
+                <!-- Show Delete button only if the authenticated user is the author of the reply -->
+                <a class="btn btn-sm btn-outline-danger" sec:authorize-url="/ticket/*/comment"
+                   th:if="${reply.author.username} == ${#authentication.name}"
+                   th:href="@{'/ticket/'+${ticket.id}+'/comment/delete?commentId=' + ${reply.id}}">
                     <span class="bi bi-trash"></span> Delete
                 </a>
             </div>
 
             <!-- Recursively include this fragment for nested replies -->
-            <div th:insert="~{::replyFragment(reply)}"></div>
+            <div th:insert="~{::replyFragment(comment=${reply})}"></div>
         </div>
     </div>
 </div>
