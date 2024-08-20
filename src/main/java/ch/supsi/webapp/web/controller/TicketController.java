@@ -1,5 +1,6 @@
 package ch.supsi.webapp.web.controller;
 
+import org.springframework.ui.Model;
 import ch.supsi.webapp.web.dto.Success;
 import ch.supsi.webapp.web.dto.TicketDTO;
 import ch.supsi.webapp.web.model.Ticket;
@@ -54,7 +55,5 @@ public class TicketController {
         if(remove) return new ResponseEntity<>(new Success(true), HttpStatus.OK);
         else return new ResponseEntity<>(new Success(false), HttpStatus.OK);
     }
-
-
 }
 

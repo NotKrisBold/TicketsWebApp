@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{master :: layout(_,~{::meta},~{::main/content()})}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Patrick Ceppi">
+    <meta name="description" content="Fast edit ticket">
+    <title>Modifica Rapida Ticket</title>
+</head>
+<body>
+<main>
+    <div class="container mt-4">
+        <h1>Modifica Rapida Ticket</h1>
+        <form id="ticketForm">
+            <input type="hidden" id="ticketId" th:value="${ticket.id}" />
+
+            <div class="form-group">
+                <label for="title">Titolo:</label>
+                <input type="text" id="title" class="form-control" th:value="${ticket.title}" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Descrizione:</label>
+                <textarea id="description" class="form-control" rows="4" th:text="${ticket.description}"></textarea>
+            </div>
+        </form>
+    </div>
+    <!-- Include il tuo JavaScript -->
+    <script th:src="@{/js/fastedit.js}"></script>
+</main>
+</body>
+</html>

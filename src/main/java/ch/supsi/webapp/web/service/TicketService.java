@@ -105,5 +105,8 @@ public class TicketService {
         return ticketRepository.findTop5ByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrderByDateDesc(search, search);
     }
 
+    public Ticket findById(int id) {
+        return ticketRepository.findById(id).orElse(null);
+    }
 
 }

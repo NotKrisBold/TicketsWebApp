@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -196,9 +195,48 @@ public class MainController {
         return ticketService.list(search).stream().map(TicketDTO::ticket2DTO).collect(Collectors.toList());
     }
 
+    @PatchMapping("/ticket/{ticketId}/fastedit")
+    public ResponseEntity<?> updateTicketField(
+            @PathVariable int ticketId,
+            @RequestParam String fieldName,
+            @RequestParam String fieldValue) {
+
+        Ticket ticket = ticketService.findById(ticketId);
+        if (ticket == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket not found");
+        }
+
+        switch (fieldName) {
+            case "title":
+                ticket.setTitle(fieldValue);
+                break;
+            case "description":
+                ticket.setDescription(fieldValue);
+                break;
+            default:
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid field name");
+        }
+
+        try {
+            ticketService.put(ticket);
+            return ResponseEntity.ok("Field updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating field");
+        }
+    }
+
+    @GetMapping("/ticket/{ticketId}/fastedit")
+    public String editTicket(@PathVariable int ticketId, Model model) {
+        Ticket ticket = ticketService.findById(ticketId);
+        if (ticket == null) {
+            return "redirect:/home";
+        }
+        model.addAttribute("ticket", ticket);
+        return "edit-ticket";
+    }
+
 
     private void checkTicketExists(int id){
         if (!ticketService.exists(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found");
     }
-
 }

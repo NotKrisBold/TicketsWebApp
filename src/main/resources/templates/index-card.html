@@ -36,6 +36,7 @@
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-outline-secondary" th:href="@{'/ticket/'+${ticket.id}}">View</a>
                                     <a class="btn btn-sm btn-outline-secondary" sec:authorize-url="/ticket/*/edit" th:href="@{'/ticket/'+${ticket.id}+'/edit'}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-secondary" sec:authorize-url="/ticket/*/fastedit" th:href="@{'/ticket/' + ${ticket.id} + '/fastedit'}">Modifica Rapida</a>
                                 </div>
                             </div>
                         </div>

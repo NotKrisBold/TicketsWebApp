@@ -40,7 +40,7 @@
                             <td th:text="${ticket.type}">BUG</td>
                             <td><span class="badge bg-primary" th:text="${ticket.status}">open</span></td>
                             <td th:text="${ticket.author.username}">autore</td>
-                            <td th:text="${#dates.format(ticket.date, 'dd.MM.yyyy HH:mm')}">01/10/2022 17:23</td>
+                            <td th:text="${#dates.format(ticket.date, 'dd.MM.yyyy HH:mm')}">01/10/2024 17:23</td>
                             <td>
                                 <a th:href="@{'/ticket/'+${ticket.id}}">view</a>
                                 <a sec:authorize-url="/ticket/*/edit" th:href="@{'/ticket/'+${ticket.id}+'/edit'}">edit</a>

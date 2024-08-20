@@ -33,6 +33,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/ticket/new").authenticated()
 						.requestMatchers("/ticket/*/edit").hasRole("ADMIN")
 						.requestMatchers("/ticket/*/delete").hasRole("ADMIN")
+						.requestMatchers("ticket/*/fastedit").hasRole("ADMIN")
 						.requestMatchers("/ticket/**").permitAll()
 						.requestMatchers("/tickets/**").permitAll()
 						.requestMatchers("/css/**").permitAll()
