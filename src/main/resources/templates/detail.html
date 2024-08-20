@@ -55,13 +55,11 @@
                 </div>
                 <hr>
                 <div th:if="${ticket.comments.size() > 0}" class="comment-section">
-                    <!-- Itera sui commenti principali -->
                     <div th:each="comment : ${ticket.comments}" class="comment-container" style="margin-bottom: 20px;">
                         <!-- Main Comment -->
                         <p th:text="${comment.author.username} + ' | ' + ${comment.time}">Author</p>
                         <p th:text="${comment.content}">Comment content</p>
 
-                        <!-- Buttons aligned side by side -->
                         <div style="display: flex; gap: 10px;">
                             <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${comment.id}}">
                                 <span class="bi bi-text-center"></span> Respond
@@ -95,7 +93,6 @@
                 <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${reply.id}}">
                     <span class="bi bi-text-center"></span> Respond
                 </a>
-                <!-- Show Delete button only if the authenticated user is the author of the reply -->
                 <a class="btn btn-sm btn-outline-danger" sec:authorize-url="/ticket/*/comment"
                    th:if="${reply.author.username} == ${#authentication.name}"
                    th:href="@{'/ticket/'+${ticket.id}+'/comment/delete?commentId=' + ${reply.id}}">
@@ -103,7 +100,6 @@
                 </a>
             </div>
 
-            <!-- Recursively include this fragment for nested replies -->
             <div th:insert="~{::replyFragment(comment=${reply})}"></div>
         </div>
     </div>
