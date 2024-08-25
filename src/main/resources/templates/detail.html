@@ -46,7 +46,7 @@
                 <hr>
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="mb-0">Comment section</h4>
-                    <a class="btn btn-sm btn-outline-info ms-2" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/comment'}">
+                    <a class="btn btn-sm btn-outline-info ms-2" th:href="@{'/ticket/'+${ticket.id}+'/comment'}">
                         <span class="bi bi-text-center"></span>New Comment
                     </a>
                 </div>
@@ -61,7 +61,7 @@
                         <p th:text="${comment.content}">Comment content</p>
 
                         <div style="display: flex; gap: 10px;">
-                            <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${comment.id}}">
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${comment.id}}">
                                 <span class="bi bi-text-center"></span> Respond
                             </a>
                             <a class="btn btn-sm btn-outline-danger" th:if="${comment.author.username} == ${#authentication.name}"
@@ -90,7 +90,7 @@
 
             <!-- Buttons for replies -->
             <div style="display: flex; gap: 10px; margin-left: 20px;">
-                <a class="btn btn-sm btn-outline-primary" sec:authorize-url="/ticket/*/comment" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${reply.id}}">
+                <a class="btn btn-sm btn-outline-primary" th:href="@{'/ticket/'+${ticket.id}+'/reply?parentId=' + ${reply.id}}">
                     <span class="bi bi-text-center"></span> Respond
                 </a>
                 <a class="btn btn-sm btn-outline-danger" sec:authorize-url="/ticket/*/comment"

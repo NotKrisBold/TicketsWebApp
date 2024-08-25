@@ -16,7 +16,6 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.formLogin(form -> form
 						.loginPage("/login")
@@ -33,6 +32,9 @@ public class WebSecurityConfig {
 						.requestMatchers("/ticket/new").authenticated()
 						.requestMatchers("/ticket/*/edit").hasRole("ADMIN")
 						.requestMatchers("/ticket/*/delete").hasRole("ADMIN")
+						.requestMatchers("/ticket/*/comment").authenticated()
+						.requestMatchers("/ticket/*/comment/delete").authenticated()
+						.requestMatchers("/ticket/*/reply").authenticated()
 						.requestMatchers("/ticket/*/fastedit").hasRole("ADMIN")
 						.requestMatchers("/ticket/**").permitAll()
 						.requestMatchers("/tickets/**").permitAll()
