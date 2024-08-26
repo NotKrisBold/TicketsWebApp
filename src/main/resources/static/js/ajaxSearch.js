@@ -3,9 +3,7 @@ const searchInput = document.querySelector("#search-input");
 
 searchInput.addEventListener("keyup", function(){
     console.log(searchInput.value)
-    if(searchInput.value.length>2)
-        search();
-    if(searchInput.value.length===0)
+    if(searchInput.value.length>=0)
         search();
 })
 
@@ -45,7 +43,7 @@ function search() {
             '</article>\n';
         }
 
-        if(tickets.length==0){
+        if(tickets.length===0){
             articles = '<article class="col-md-4"><p>Nessun ticket trovato</p></article>';
         }
 

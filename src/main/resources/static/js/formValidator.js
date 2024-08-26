@@ -1,31 +1,3 @@
-/*
-
-Esempio di gestione del evento sul campo username, poi generalizzato nella soluzione:
-
-    var userName = document.querySelector("#username");
-
-    userName.addEventListener("input", function(event){
-        // se volessimo generalizzare, potremmo usare event.target (è una referenza all'oggetto che ha scatenato l'evento)
-        if (userName.value.length == 0) {
-            userName.classList.remove('is-invalid');
-            userName.classList.remove('is-valid');
-            return;
-        }
-        if((/^[a-zA-Z]+$/g).test(userName.value)){
-            if (userName.classList.contains('is-invalid')) {
-                userName.classList.remove('is-invalid')
-            }
-            userName.classList.add('is-valid');
-        }else{
-            if (userName.classList.contains('is-valid')) {
-                userName.classList.remove('is-valid')
-            }
-            userName.classList.add('is-invalid');
-        }
-    });
-
-*/
-
 var mod = (function(){
 
     var register_form = document.querySelector("#register_form");
